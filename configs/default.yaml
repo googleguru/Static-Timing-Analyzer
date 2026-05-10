@@ -1,0 +1,42 @@
+# sta-choa default experiment configuration
+# Runs all methods on all enabled benchmarks in the synthetic manifest.
+
+# ── Benchmark manifests ───────────────────────────────────────────────────────
+manifests:
+  - benchmarks/manifests/synthetic.yaml
+  - benchmarks/manifests/iscas85.yaml    # skipped unless files are present
+  - benchmarks/manifests/iscas89.yaml    # skipped unless files are present
+  - benchmarks/manifests/ipsd.yaml       # skipped unless files are present
+
+# ── OpenSTA settings ─────────────────────────────────────────────────────────
+opensta_binary: sta             # override with $OPENSTA_BIN env var
+sta_timeout: 300                # seconds per STA run
+workdir: outputs/sta_work
+
+# ── Optimization methods to run ──────────────────────────────────────────────
+methods:
+  - baseline
+  - random
+  - choa
+  - choa_memory
+
+# ── ChOA hyperparameters ─────────────────────────────────────────────────────
+pop_size:  20
+max_iter:  50
+seed:      42
+
+# ── Objective weights ─────────────────────────────────────────────────────────
+w_wns:        1.0
+w_tns:        0.5
+w_violations: 0.3
+w_criticality: 0.2
+w_uncertainty: 0.1
+
+# ── ECO settings ─────────────────────────────────────────────────────────────
+max_eco_suggestions: 20
+
+# ── Output directories ───────────────────────────────────────────────────────
+output_dir:  outputs
+figures_dir: outputs/figures
+tables_dir:  outputs/tables
+logs_dir:    outputs/logs

@@ -1,0 +1,99 @@
+# ISCAS-89 sequential benchmark manifest.
+#
+# ISCAS-89 sequential circuits introduced in:
+#   F. Brglez, D. Bryan, K. Kozminski, "Combinational Profiles of Sequential
+#   Benchmark Circuits", ISCAS 1989.
+#
+# Timing-ready gate-level Verilog mapped to a Liberty library is required.
+# STATUS: Files NOT included — benchmarks will be SKIPPED until placed here.
+# See benchmarks/README.md for preparation instructions.
+
+benchmarks:
+
+  - name: s27
+    family: iscas89
+    liberty: benchmarks/iscas89/s27/tech.lib
+    verilog: benchmarks/iscas89/s27/s27.v
+    sdc:     benchmarks/iscas89/s27/s27.sdc
+    spef:    ~
+    sdf:     ~
+    top_module: s27
+    clock_period_ns: 10.0
+    enabled: true
+
+  - name: s208
+    family: iscas89
+    liberty: benchmarks/iscas89/s208/tech.lib
+    verilog: benchmarks/iscas89/s208/s208.v
+    sdc:     benchmarks/iscas89/s208/s208.sdc
+    spef:    ~
+    sdf:     ~
+    top_module: s208
+    clock_period_ns: 10.0
+    enabled: true
+
+  - name: s344
+    family: iscas89
+    liberty: benchmarks/iscas89/s344/tech.lib
+    verilog: benchmarks/iscas89/s344/s344.v
+    sdc:     benchmarks/iscas89/s344/s344.sdc
+    spef:    ~
+    sdf:     ~
+    top_module: s344
+    clock_period_ns: 10.0
+    enabled: true
+
+  - name: s382
+    family: iscas89
+    liberty: benchmarks/iscas89/s382/tech.lib
+    verilog: benchmarks/iscas89/s382/s382.v
+    sdc:     benchmarks/iscas89/s382/s382.sdc
+    spef:    ~
+    sdf:     ~
+    top_module: s382
+    clock_period_ns: 10.0
+    enabled: true
+
+  - name: s526
+    family: iscas89
+    liberty: benchmarks/iscas89/s526/tech.lib
+    verilog: benchmarks/iscas89/s526/s526.v
+    sdc:     benchmarks/iscas89/s526/s526.sdc
+    spef:    ~
+    sdf:     ~
+    top_module: s526
+    clock_period_ns: 10.0
+    enabled: true
+
+  - name: s1196
+    family: iscas89
+    liberty: benchmarks/iscas89/s1196/tech.lib
+    verilog: benchmarks/iscas89/s1196/s1196.v
+    sdc:     benchmarks/iscas89/s1196/s1196.sdc
+    spef:    ~
+    sdf:     ~
+    top_module: s1196
+    clock_period_ns: 10.0
+    enabled: true
+
+  - name: s5378
+    family: iscas89
+    liberty: benchmarks/iscas89/s5378/tech.lib
+    verilog: benchmarks/iscas89/s5378/s5378.v
+    sdc:     benchmarks/iscas89/s5378/s5378.sdc
+    spef:    ~
+    sdf:     ~
+    top_module: s5378
+    clock_period_ns: 10.0
+    enabled: true
+
+  - name: s9234
+    family: iscas89
+    liberty: benchmarks/iscas89/s9234/tech.lib
+    verilog: benchmarks/iscas89/s9234/s9234.v
+    sdc:     benchmarks/iscas89/s9234/s9234.sdc
+    spef:    ~
+    sdf:     ~
+    top_module: s9234
+    clock_period_ns: 10.0
+    enabled: true

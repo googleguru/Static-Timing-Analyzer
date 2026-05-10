@@ -1,0 +1,60 @@
+# Synthetic benchmark manifest — always available, no external files required.
+# These benchmarks use a hand-crafted Liberty + generated Verilog netlists.
+# Copyright (c) 2024 sta-choa project (MIT License)
+
+benchmarks:
+
+  - name: simple_design
+    family: synthetic
+    liberty: benchmarks/synthetic/simple.lib
+    verilog: benchmarks/synthetic/simple_design.v
+    sdc:     benchmarks/synthetic/simple.sdc
+    spef:    benchmarks/synthetic/simple.spef
+    sdf:     ~
+    top_module: simple_design
+    clock_period_ns: 10.0
+    enabled: true
+
+  - name: synth_small
+    family: synthetic
+    liberty: benchmarks/synthetic/simple.lib
+    verilog: benchmarks/synthetic/synth_small.v
+    sdc:     benchmarks/synthetic/synth_small.sdc
+    spef:    ~
+    sdf:     ~
+    top_module: synth_small
+    clock_period_ns: 10.0
+    enabled: true
+
+  - name: synth_medium
+    family: synthetic
+    liberty: benchmarks/synthetic/simple.lib
+    verilog: benchmarks/synthetic/synth_medium.v
+    sdc:     benchmarks/synthetic/synth_medium.sdc
+    spef:    ~
+    sdf:     ~
+    top_module: synth_medium
+    clock_period_ns: 8.0
+    enabled: true
+
+  - name: synth_large
+    family: synthetic
+    liberty: benchmarks/synthetic/simple.lib
+    verilog: benchmarks/synthetic/synth_large.v
+    sdc:     benchmarks/synthetic/synth_large.sdc
+    spef:    ~
+    sdf:     ~
+    top_module: synth_large
+    clock_period_ns: 6.0
+    enabled: true
+
+  - name: synth_tight
+    family: synthetic
+    liberty: benchmarks/synthetic/simple.lib
+    verilog: benchmarks/synthetic/synth_tight.v
+    sdc:     benchmarks/synthetic/synth_tight.sdc
+    spef:    ~
+    sdf:     ~
+    top_module: synth_tight
+    clock_period_ns: 5.0
+    enabled: true

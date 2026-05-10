@@ -1,0 +1,32 @@
+# ISCAS benchmark configuration (used when ISCAS collateral is available).
+# Falls back gracefully if files are missing.
+
+manifests:
+  - benchmarks/manifests/iscas85.yaml
+  - benchmarks/manifests/iscas89.yaml
+
+opensta_binary: sta
+sta_timeout: 600
+workdir: outputs/sta_work
+
+methods:
+  - baseline
+  - choa
+  - choa_memory
+
+pop_size:  30
+max_iter:  100
+seed:      42
+
+w_wns:        1.0
+w_tns:        0.5
+w_violations: 0.4
+w_criticality: 0.3
+w_uncertainty: 0.1
+
+max_eco_suggestions: 30
+
+output_dir:  outputs
+figures_dir: outputs/figures
+tables_dir:  outputs/tables
+logs_dir:    outputs/logs

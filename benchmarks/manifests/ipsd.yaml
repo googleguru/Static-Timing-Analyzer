@@ -1,0 +1,45 @@
+# IPSD (Industrial Physical Design) benchmark manifest.
+#
+# IPSD circuits are from the ISPD / TAU timing contest benchmark suites.
+# See: https://www.ispd.cc/contests/  and  https://sites.google.com/view/taucontest
+#
+# These circuits require Liberty, Verilog, SDC, and optionally SPEF/SDF collateral
+# that must be sourced from the respective contest organizers.
+#
+# STATUS: Files NOT included — benchmarks will be SKIPPED until placed here.
+# See benchmarks/README.md for preparation instructions.
+
+benchmarks:
+
+  - name: ispd18_tau_des_perf
+    family: ipsd
+    liberty: benchmarks/ipsd/tau2018/tech.lib
+    verilog: benchmarks/ipsd/tau2018/des_perf.v
+    sdc:     benchmarks/ipsd/tau2018/des_perf.sdc
+    spef:    benchmarks/ipsd/tau2018/des_perf.spef
+    sdf:     ~
+    top_module: des_perf
+    clock_period_ns: 2.5
+    enabled: true
+
+  - name: ispd18_tau_vga_lcd
+    family: ipsd
+    liberty: benchmarks/ipsd/tau2018/tech.lib
+    verilog: benchmarks/ipsd/tau2018/vga_lcd.v
+    sdc:     benchmarks/ipsd/tau2018/vga_lcd.sdc
+    spef:    benchmarks/ipsd/tau2018/vga_lcd.spef
+    sdf:     ~
+    top_module: vga_lcd
+    clock_period_ns: 3.0
+    enabled: true
+
+  - name: ispd19_tau_mgc_fpu
+    family: ipsd
+    liberty: benchmarks/ipsd/tau2019/tech.lib
+    verilog: benchmarks/ipsd/tau2019/mgc_fpu.v
+    sdc:     benchmarks/ipsd/tau2019/mgc_fpu.sdc
+    spef:    benchmarks/ipsd/tau2019/mgc_fpu.spef
+    sdf:     ~
+    top_module: mgc_fpu
+    clock_period_ns: 2.0
+    enabled: true

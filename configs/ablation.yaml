@@ -1,0 +1,36 @@
+# sta-choa ablation study configuration
+# Compares all four methods with reduced iterations for faster execution.
+
+manifests:
+  - benchmarks/manifests/synthetic.yaml
+  - benchmarks/manifests/iscas85.yaml
+  - benchmarks/manifests/iscas89.yaml
+
+opensta_binary: sta
+sta_timeout: 300
+workdir: outputs/sta_work
+
+# All four methods for ablation
+methods:
+  - baseline
+  - random
+  - choa
+  - choa_memory
+
+# Reduced population for ablation speed
+pop_size:  15
+max_iter:  30
+seed:      42
+
+w_wns:        1.0
+w_tns:        0.5
+w_violations: 0.3
+w_criticality: 0.2
+w_uncertainty: 0.1
+
+max_eco_suggestions: 10
+
+output_dir:  outputs
+figures_dir: outputs/figures
+tables_dir:  outputs/tables
+logs_dir:    outputs/logs

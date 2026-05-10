@@ -1,0 +1,103 @@
+# ISCAS-85 combinational benchmark manifest.
+#
+# ISCAS-85 circuits are publicly available benchmark circuits introduced in:
+#   F. Brglez, H. Fujiwara, "A Neutral Netlist of 10 Combinational Benchmark
+#   Circuits and a Target Translator in Fortran", ISCAS 1985.
+#
+# Timing-ready collateral (Liberty-mapped gate-level Verilog + SDC) must be
+# prepared separately from public sources (e.g., opencores, verilog-iscas, or
+# academic EDA repositories).
+#
+# ASSUMPTION: Files placed under benchmarks/iscas85/<circuit>/
+# STATUS: Files NOT included — benchmarks will be SKIPPED until placed here.
+# See benchmarks/README.md for download and preparation instructions.
+
+benchmarks:
+
+  - name: c17
+    family: iscas85
+    liberty: benchmarks/iscas85/c17/tech.lib
+    verilog: benchmarks/iscas85/c17/c17.v
+    sdc:     benchmarks/iscas85/c17/c17.sdc
+    spef:    ~
+    sdf:     ~
+    top_module: c17
+    clock_period_ns: 10.0
+    enabled: true
+
+  - name: c432
+    family: iscas85
+    liberty: benchmarks/iscas85/c432/tech.lib
+    verilog: benchmarks/iscas85/c432/c432.v
+    sdc:     benchmarks/iscas85/c432/c432.sdc
+    spef:    ~
+    sdf:     ~
+    top_module: c432
+    clock_period_ns: 10.0
+    enabled: true
+
+  - name: c499
+    family: iscas85
+    liberty: benchmarks/iscas85/c499/tech.lib
+    verilog: benchmarks/iscas85/c499/c499.v
+    sdc:     benchmarks/iscas85/c499/c499.sdc
+    spef:    ~
+    sdf:     ~
+    top_module: c499
+    clock_period_ns: 10.0
+    enabled: true
+
+  - name: c880
+    family: iscas85
+    liberty: benchmarks/iscas85/c880/tech.lib
+    verilog: benchmarks/iscas85/c880/c880.v
+    sdc:     benchmarks/iscas85/c880/c880.sdc
+    spef:    ~
+    sdf:     ~
+    top_module: c880
+    clock_period_ns: 10.0
+    enabled: true
+
+  - name: c1355
+    family: iscas85
+    liberty: benchmarks/iscas85/c1355/tech.lib
+    verilog: benchmarks/iscas85/c1355/c1355.v
+    sdc:     benchmarks/iscas85/c1355/c1355.sdc
+    spef:    ~
+    sdf:     ~
+    top_module: c1355
+    clock_period_ns: 10.0
+    enabled: true
+
+  - name: c1908
+    family: iscas85
+    liberty: benchmarks/iscas85/c1908/tech.lib
+    verilog: benchmarks/iscas85/c1908/c1908.v
+    sdc:     benchmarks/iscas85/c1908/c1908.sdc
+    spef:    ~
+    sdf:     ~
+    top_module: c1908
+    clock_period_ns: 10.0
+    enabled: true
+
+  - name: c3540
+    family: iscas85
+    liberty: benchmarks/iscas85/c3540/tech.lib
+    verilog: benchmarks/iscas85/c3540/c3540.v
+    sdc:     benchmarks/iscas85/c3540/c3540.sdc
+    spef:    ~
+    sdf:     ~
+    top_module: c3540
+    clock_period_ns: 10.0
+    enabled: true
+
+  - name: c7552
+    family: iscas85
+    liberty: benchmarks/iscas85/c7552/tech.lib
+    verilog: benchmarks/iscas85/c7552/c7552.v
+    sdc:     benchmarks/iscas85/c7552/c7552.sdc
+    spef:    ~
+    sdf:     ~
+    top_module: c7552
+    clock_period_ns: 10.0
+    enabled: true

@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  sta-choa:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: sta-choa:latest
+    container_name: sta-choa-run
+    command: eval
+    environment:
+      - OPENSTA_BIN=/opt/opensta/bin/sta
+      - PYTHONPATH=/workspace/src
+    volumes:
+      # Mount benchmark data (place external benchmarks here)
+      - ../benchmarks:/workspace/benchmarks:ro
+      # Mount outputs so results are accessible on the host
+      - ../outputs:/workspace/outputs
+    working_dir: /workspace
+
+  sta-choa-ablation:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: sta-choa:latest
+    container_name: sta-choa-ablation
+    command: ablation
+    environment:
+      - OPENSTA_BIN=/opt/opensta/bin/sta
+      - PYTHONPATH=/workspace/src
+    volumes:
+      - ../benchmarks:/workspace/benchmarks:ro
+      - ../outputs:/workspace/outputs
+    working_dir: /workspace

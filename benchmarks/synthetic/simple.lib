@@ -1,0 +1,402 @@
+/* Synthetic Liberty library for sta-choa framework testing.
+ * This file is NOT derived from any commercial PDK.
+ * Values are illustrative only and are not suitable for tape-out.
+ *
+ * Copyright (c) 2024 sta-choa project (MIT License)
+ */
+library (simple_lib) {
+
+  comment                : "Synthetic 45nm-class illustrative library";
+  technology             : cmos;
+  delay_model            : table_lookup;
+
+  time_unit              : "1ns";
+  voltage_unit           : "1V";
+  current_unit           : "1mA";
+  resistance_unit        : "1kohm";
+  capacitive_load_unit     (1, ff);
+  leakage_power_unit     : "1uW";
+
+  nom_process            : 1.0;
+  nom_temperature        : 25.0;
+  nom_voltage            : 1.1;
+
+  input_threshold_pct_rise  : 50.0;
+  input_threshold_pct_fall  : 50.0;
+  output_threshold_pct_rise : 50.0;
+  output_threshold_pct_fall : 50.0;
+  slew_lower_threshold_pct_rise : 10.0;
+  slew_upper_threshold_pct_rise : 90.0;
+  slew_lower_threshold_pct_fall : 10.0;
+  slew_upper_threshold_pct_fall : 90.0;
+
+  /* ── LUT templates ─────────────────────────────────────────────────── */
+  lu_table_template (delay_template_3x3) {
+    variable_1 : input_net_transition;
+    variable_2 : total_output_net_capacitance;
+    index_1    ("0.02, 0.1, 0.5");
+    index_2    ("5, 20, 80");
+  }
+
+  lu_table_template (constraint_template_3x3) {
+    variable_1 : related_pin_transition;
+    variable_2 : constrained_pin_transition;
+    index_1    ("0.02, 0.1, 0.5");
+    index_2    ("0.02, 0.1, 0.5");
+  }
+
+  /* ── INVX1 ─────────────────────────────────────────────────────────── */
+  cell (INVX1) {
+    cell_leakage_power : 0.05;
+    pin (A) {
+      direction   : input;
+      capacitance : 4.0;
+    }
+    pin (ZN) {
+      direction           : output;
+      function            : "(!A)";
+      timing () {
+        related_pin        : "A";
+        timing_sense       : negative_unate;
+        cell_rise (delay_template_3x3) {
+          values ("0.05,0.08,0.15", "0.10,0.13,0.22", "0.22,0.26,0.40");
+        }
+        cell_fall (delay_template_3x3) {
+          values ("0.04,0.07,0.13", "0.09,0.12,0.20", "0.20,0.24,0.37");
+        }
+        rise_transition (delay_template_3x3) {
+          values ("0.03,0.06,0.15", "0.05,0.08,0.18", "0.10,0.14,0.28");
+        }
+        fall_transition (delay_template_3x3) {
+          values ("0.03,0.05,0.13", "0.05,0.07,0.16", "0.09,0.12,0.25");
+        }
+      }
+    }
+  }
+
+  /* ── BUFX2 ─────────────────────────────────────────────────────────── */
+  cell (BUFX2) {
+    cell_leakage_power : 0.06;
+    pin (A) {
+      direction   : input;
+      capacitance : 4.5;
+    }
+    pin (Z) {
+      direction           : output;
+      function            : "A";
+      timing () {
+        related_pin        : "A";
+        timing_sense       : positive_unate;
+        cell_rise (delay_template_3x3) {
+          values ("0.06,0.10,0.18", "0.11,0.15,0.25", "0.24,0.28,0.44");
+        }
+        cell_fall (delay_template_3x3) {
+          values ("0.05,0.09,0.17", "0.10,0.14,0.23", "0.22,0.26,0.41");
+        }
+        rise_transition (delay_template_3x3) {
+          values ("0.03,0.06,0.15", "0.05,0.08,0.18", "0.10,0.14,0.28");
+        }
+        fall_transition (delay_template_3x3) {
+          values ("0.03,0.05,0.13", "0.05,0.07,0.16", "0.09,0.12,0.25");
+        }
+      }
+    }
+  }
+
+  /* ── AND2X1 ─────────────────────────────────────────────────────────── */
+  cell (AND2X1) {
+    cell_leakage_power : 0.07;
+    pin (A) { direction : input; capacitance : 5.0; }
+    pin (B) { direction : input; capacitance : 5.0; }
+    pin (Z) {
+      direction  : output;
+      function   : "(A & B)";
+      timing () {
+        related_pin  : "A";
+        timing_sense : positive_unate;
+        cell_rise (delay_template_3x3) {
+          values ("0.07,0.12,0.22", "0.13,0.18,0.30", "0.28,0.33,0.52");
+        }
+        cell_fall (delay_template_3x3) {
+          values ("0.06,0.11,0.20", "0.12,0.17,0.28", "0.26,0.31,0.49");
+        }
+        rise_transition (delay_template_3x3) {
+          values ("0.04,0.07,0.18", "0.06,0.09,0.21", "0.12,0.16,0.33");
+        }
+        fall_transition (delay_template_3x3) {
+          values ("0.04,0.06,0.16", "0.06,0.08,0.19", "0.11,0.14,0.30");
+        }
+      }
+      timing () {
+        related_pin  : "B";
+        timing_sense : positive_unate;
+        cell_rise (delay_template_3x3) {
+          values ("0.07,0.12,0.22", "0.13,0.18,0.30", "0.28,0.33,0.52");
+        }
+        cell_fall (delay_template_3x3) {
+          values ("0.06,0.11,0.20", "0.12,0.17,0.28", "0.26,0.31,0.49");
+        }
+        rise_transition (delay_template_3x3) {
+          values ("0.04,0.07,0.18", "0.06,0.09,0.21", "0.12,0.16,0.33");
+        }
+        fall_transition (delay_template_3x3) {
+          values ("0.04,0.06,0.16", "0.06,0.08,0.19", "0.11,0.14,0.30");
+        }
+      }
+    }
+  }
+
+  /* ── OR2X1 ─────────────────────────────────────────────────────────── */
+  cell (OR2X1) {
+    cell_leakage_power : 0.07;
+    pin (A) { direction : input; capacitance : 5.0; }
+    pin (B) { direction : input; capacitance : 5.0; }
+    pin (Z) {
+      direction  : output;
+      function   : "(A | B)";
+      timing () {
+        related_pin  : "A";
+        timing_sense : positive_unate;
+        cell_rise (delay_template_3x3) {
+          values ("0.08,0.13,0.23", "0.14,0.19,0.31", "0.29,0.34,0.53");
+        }
+        cell_fall (delay_template_3x3) {
+          values ("0.07,0.12,0.21", "0.13,0.18,0.29", "0.27,0.32,0.50");
+        }
+        rise_transition (delay_template_3x3) {
+          values ("0.04,0.07,0.18", "0.06,0.09,0.21", "0.12,0.16,0.33");
+        }
+        fall_transition (delay_template_3x3) {
+          values ("0.04,0.06,0.16", "0.06,0.08,0.19", "0.11,0.14,0.30");
+        }
+      }
+      timing () {
+        related_pin  : "B";
+        timing_sense : positive_unate;
+        cell_rise (delay_template_3x3) {
+          values ("0.08,0.13,0.23", "0.14,0.19,0.31", "0.29,0.34,0.53");
+        }
+        cell_fall (delay_template_3x3) {
+          values ("0.07,0.12,0.21", "0.13,0.18,0.29", "0.27,0.32,0.50");
+        }
+        rise_transition (delay_template_3x3) {
+          values ("0.04,0.07,0.18", "0.06,0.09,0.21", "0.12,0.16,0.33");
+        }
+        fall_transition (delay_template_3x3) {
+          values ("0.04,0.06,0.16", "0.06,0.08,0.19", "0.11,0.14,0.30");
+        }
+      }
+    }
+  }
+
+  /* ── NAND2X1 ─────────────────────────────────────────────────────────── */
+  cell (NAND2X1) {
+    cell_leakage_power : 0.06;
+    pin (A) { direction : input; capacitance : 4.8; }
+    pin (B) { direction : input; capacitance : 4.8; }
+    pin (ZN) {
+      direction  : output;
+      function   : "!(A & B)";
+      timing () {
+        related_pin  : "A";
+        timing_sense : negative_unate;
+        cell_rise (delay_template_3x3) {
+          values ("0.05,0.09,0.17", "0.11,0.15,0.26", "0.25,0.30,0.47");
+        }
+        cell_fall (delay_template_3x3) {
+          values ("0.04,0.08,0.15", "0.10,0.14,0.24", "0.23,0.28,0.44");
+        }
+        rise_transition (delay_template_3x3) {
+          values ("0.03,0.06,0.15", "0.05,0.08,0.18", "0.10,0.14,0.28");
+        }
+        fall_transition (delay_template_3x3) {
+          values ("0.03,0.05,0.13", "0.05,0.07,0.16", "0.09,0.12,0.25");
+        }
+      }
+      timing () {
+        related_pin  : "B";
+        timing_sense : negative_unate;
+        cell_rise (delay_template_3x3) {
+          values ("0.05,0.09,0.17", "0.11,0.15,0.26", "0.25,0.30,0.47");
+        }
+        cell_fall (delay_template_3x3) {
+          values ("0.04,0.08,0.15", "0.10,0.14,0.24", "0.23,0.28,0.44");
+        }
+        rise_transition (delay_template_3x3) {
+          values ("0.03,0.06,0.15", "0.05,0.08,0.18", "0.10,0.14,0.28");
+        }
+        fall_transition (delay_template_3x3) {
+          values ("0.03,0.05,0.13", "0.05,0.07,0.16", "0.09,0.12,0.25");
+        }
+      }
+    }
+  }
+
+  /* ── NOR2X1 ─────────────────────────────────────────────────────────── */
+  cell (NOR2X1) {
+    cell_leakage_power : 0.06;
+    pin (A) { direction : input; capacitance : 4.8; }
+    pin (B) { direction : input; capacitance : 4.8; }
+    pin (ZN) {
+      direction  : output;
+      function   : "!(A | B)";
+      timing () {
+        related_pin  : "A";
+        timing_sense : negative_unate;
+        cell_rise (delay_template_3x3) {
+          values ("0.06,0.10,0.18", "0.12,0.16,0.27", "0.26,0.31,0.48");
+        }
+        cell_fall (delay_template_3x3) {
+          values ("0.05,0.09,0.16", "0.11,0.15,0.25", "0.24,0.29,0.45");
+        }
+        rise_transition (delay_template_3x3) {
+          values ("0.03,0.06,0.15", "0.05,0.08,0.18", "0.10,0.14,0.28");
+        }
+        fall_transition (delay_template_3x3) {
+          values ("0.03,0.05,0.13", "0.05,0.07,0.16", "0.09,0.12,0.25");
+        }
+      }
+      timing () {
+        related_pin  : "B";
+        timing_sense : negative_unate;
+        cell_rise (delay_template_3x3) {
+          values ("0.06,0.10,0.18", "0.12,0.16,0.27", "0.26,0.31,0.48");
+        }
+        cell_fall (delay_template_3x3) {
+          values ("0.05,0.09,0.16", "0.11,0.15,0.25", "0.24,0.29,0.45");
+        }
+        rise_transition (delay_template_3x3) {
+          values ("0.03,0.06,0.15", "0.05,0.08,0.18", "0.10,0.14,0.28");
+        }
+        fall_transition (delay_template_3x3) {
+          values ("0.03,0.05,0.13", "0.05,0.07,0.16", "0.09,0.12,0.25");
+        }
+      }
+    }
+  }
+
+  /* ── XOR2X1 ─────────────────────────────────────────────────────────── */
+  cell (XOR2X1) {
+    cell_leakage_power : 0.10;
+    pin (A) { direction : input; capacitance : 6.0; }
+    pin (B) { direction : input; capacitance : 6.0; }
+    pin (Z) {
+      direction  : output;
+      function   : "(A ^ B)";
+      timing () {
+        related_pin  : "A";
+        timing_sense : non_unate;
+        cell_rise (delay_template_3x3) {
+          values ("0.10,0.16,0.30", "0.18,0.25,0.42", "0.38,0.46,0.70");
+        }
+        cell_fall (delay_template_3x3) {
+          values ("0.09,0.15,0.28", "0.17,0.23,0.39", "0.36,0.43,0.66");
+        }
+        rise_transition (delay_template_3x3) {
+          values ("0.05,0.09,0.22", "0.08,0.12,0.26", "0.15,0.20,0.40");
+        }
+        fall_transition (delay_template_3x3) {
+          values ("0.05,0.08,0.20", "0.07,0.10,0.23", "0.13,0.17,0.36");
+        }
+      }
+      timing () {
+        related_pin  : "B";
+        timing_sense : non_unate;
+        cell_rise (delay_template_3x3) {
+          values ("0.10,0.16,0.30", "0.18,0.25,0.42", "0.38,0.46,0.70");
+        }
+        cell_fall (delay_template_3x3) {
+          values ("0.09,0.15,0.28", "0.17,0.23,0.39", "0.36,0.43,0.66");
+        }
+        rise_transition (delay_template_3x3) {
+          values ("0.05,0.09,0.22", "0.08,0.12,0.26", "0.15,0.20,0.40");
+        }
+        fall_transition (delay_template_3x3) {
+          values ("0.05,0.08,0.20", "0.07,0.10,0.23", "0.13,0.17,0.36");
+        }
+      }
+    }
+  }
+
+  /* ── DFFX1 (positive-edge D flip-flop) ─────────────────────────────── */
+  cell (DFFX1) {
+    cell_leakage_power : 0.20;
+    ff ("IQ", "IQN") {
+      next_state      : "D";
+      clocked_on      : "CK";
+    }
+    pin (D) {
+      direction   : input;
+      capacitance : 5.0;
+      timing () {
+        related_pin      : "CK";
+        timing_type      : setup_rising;
+        rise_constraint (constraint_template_3x3) {
+          values ("0.08,0.10,0.15", "0.10,0.12,0.18", "0.15,0.18,0.25");
+        }
+        fall_constraint (constraint_template_3x3) {
+          values ("0.08,0.10,0.15", "0.10,0.12,0.18", "0.15,0.18,0.25");
+        }
+      }
+      timing () {
+        related_pin      : "CK";
+        timing_type      : hold_rising;
+        rise_constraint (constraint_template_3x3) {
+          values ("0.02,0.02,0.02", "0.02,0.02,0.02", "0.02,0.02,0.02");
+        }
+        fall_constraint (constraint_template_3x3) {
+          values ("0.02,0.02,0.02", "0.02,0.02,0.02", "0.02,0.02,0.02");
+        }
+      }
+    }
+    pin (CK) {
+      direction   : input;
+      capacitance : 8.0;
+      clock       : true;
+    }
+    pin (Q) {
+      direction   : output;
+      function    : "IQ";
+      timing () {
+        related_pin  : "CK";
+        timing_type  : rising_edge;
+        timing_sense : non_unate;
+        cell_rise (delay_template_3x3) {
+          values ("0.12,0.18,0.35", "0.20,0.28,0.50", "0.40,0.52,0.85");
+        }
+        cell_fall (delay_template_3x3) {
+          values ("0.11,0.17,0.33", "0.19,0.26,0.47", "0.38,0.49,0.80");
+        }
+        rise_transition (delay_template_3x3) {
+          values ("0.04,0.08,0.20", "0.06,0.10,0.24", "0.12,0.17,0.35");
+        }
+        fall_transition (delay_template_3x3) {
+          values ("0.04,0.07,0.18", "0.06,0.09,0.22", "0.11,0.15,0.32");
+        }
+      }
+    }
+    pin (QN) {
+      direction   : output;
+      function    : "IQN";
+      timing () {
+        related_pin  : "CK";
+        timing_type  : rising_edge;
+        timing_sense : non_unate;
+        cell_rise (delay_template_3x3) {
+          values ("0.13,0.19,0.36", "0.21,0.29,0.51", "0.41,0.53,0.86");
+        }
+        cell_fall (delay_template_3x3) {
+          values ("0.12,0.18,0.34", "0.20,0.27,0.48", "0.39,0.50,0.81");
+        }
+        rise_transition (delay_template_3x3) {
+          values ("0.04,0.08,0.20", "0.06,0.10,0.24", "0.12,0.17,0.35");
+        }
+        fall_transition (delay_template_3x3) {
+          values ("0.04,0.07,0.18", "0.06,0.09,0.22", "0.11,0.15,0.32");
+        }
+      }
+    }
+  }
+
+}
+/* end of library */
